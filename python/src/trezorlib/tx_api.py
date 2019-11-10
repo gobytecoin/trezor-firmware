@@ -38,6 +38,10 @@ def is_dash(coin):
     return coin["coin_name"].lower().startswith("dash")
 
 
+def is_gobyte(coin):
+    return coin["coin_name"].lower().startswith("gobyte")
+
+
 def pack_varint(n):
     if n < 253:
         return struct.pack("<B", n)
@@ -121,7 +125,7 @@ def json_to_tx(coin, data):
             extra_data_len = 1 + joinsplit_cnt * 1802 + 32 + 64
             t.extra_data = rawtx[-extra_data_len:]
 
-    if is_dash(coin):
+    if is_dash(coin) or is_gobyte(coin):
         dip2_type = data.get("type", 0)
 
         if t.version == 3 and dip2_type != 0:
